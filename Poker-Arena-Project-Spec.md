@@ -14,12 +14,12 @@ For the human player, the goal is a useful practice loop: play a short session, 
 
 ## Scope and release sequence
 
-| Release | Deliverable | Completion condition |
-| --- | --- | --- |
-| Arena MVP | Heads-up no-limit Texas Hold’em with scripted opponents, a playable table, hand replay, and batch evaluation | Games are correct and reproducible; a human can complete a session against every opponent preset |
-| Learning lab | Small Leduc Hold’em environment with a random baseline and CFR agent | Training, checkpoints, and independent evaluation work in a tractable poker game |
-| Learned Hold’em agent | Discrete-action Hold’em policy trained against a frozen opponent mixture | Produces a reproducible benchmark report with held-out opponents and uncertainty |
-| Autonomous bot | Exportable policy and adapter for the local arena or a specifically approved bot venue | Runs unattended through the same observation and legal-action contract |
+| Release               | Deliverable                                                                                                  | Completion condition                                                                             |
+| --------------------- | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------ |
+| Arena MVP             | Heads-up no-limit Texas Hold’em with scripted opponents, a playable table, hand replay, and batch evaluation | Games are correct and reproducible; a human can complete a session against every opponent preset |
+| Learning lab          | Small Leduc Hold’em environment with a random baseline and CFR agent                                         | Training, checkpoints, and independent evaluation work in a tractable poker game                 |
+| Learned Hold’em agent | Discrete-action Hold’em policy trained against a frozen opponent mixture                                     | Produces a reproducible benchmark report with held-out opponents and uncertainty                 |
+| Autonomous bot        | Exportable policy and adapter for the local arena or a specifically approved bot venue                       | Runs unattended through the same observation and legal-action contract                           |
 
 The Hold’em arena is the main product. Leduc is a separate learning benchmark; its results and checkpoints must never be presented as Hold’em performance. Six-player tables, tournaments, arbitrary bet sizing, and opponent adaptation across long sessions are later milestones.
 
@@ -35,15 +35,15 @@ Use PokerKit behind an adapter for dealing, betting legality, hand resolution, a
 
 Styles are parameterized policies, not random-action percentages pasted onto labels. Every policy conditions on its own cards, public cards, position, pot odds, stack depth, street, and observed betting history.
 
-| Preset | Intended behavior | Parameters that distinguish it |
-| --- | --- | --- |
-| Nit | Enters few marginal hands and folds readily to pressure | Narrow entry range, high continuation threshold, low bluff frequency |
-| Tight aggressive | Selective entry with assertive value betting and some bluffs | Narrower entry range, higher raise frequency, disciplined calls |
-| Loose aggressive | Enters more hands and applies frequent pressure | Wider entry range, more continuation bets and reraises |
-| Calling station | Enters widely, calls too often, rarely raises without strength | Wide calling range, low fold tendency, low bluff aggression |
-| Maniac | Applies excessive pressure with weak as well as strong hands | Very wide entry, frequent reraises, large bet-size preference |
-| Fit or fold | Continues strongly connected hands and gives up often otherwise | High dependence on board connection, high fold-to-pressure tendency |
-| Mixed reference | Uses a configurable mix of sensible heuristic behaviors | Moderate ranges, pot-odds sensitivity, varied sizing |
+| Preset           | Intended behavior                                               | Parameters that distinguish it                                       |
+| ---------------- | --------------------------------------------------------------- | -------------------------------------------------------------------- |
+| Nit              | Enters few marginal hands and folds readily to pressure         | Narrow entry range, high continuation threshold, low bluff frequency |
+| Tight aggressive | Selective entry with assertive value betting and some bluffs    | Narrower entry range, higher raise frequency, disciplined calls      |
+| Loose aggressive | Enters more hands and applies frequent pressure                 | Wider entry range, more continuation bets and reraises               |
+| Calling station  | Enters widely, calls too often, rarely raises without strength  | Wide calling range, low fold tendency, low bluff aggression          |
+| Maniac           | Applies excessive pressure with weak as well as strong hands    | Very wide entry, frequent reraises, large bet-size preference        |
+| Fit or fold      | Continues strongly connected hands and gives up often otherwise | High dependence on board connection, high fold-to-pressure tendency  |
+| Mixed reference  | Uses a configurable mix of sensible heuristic behaviors         | Moderate ranges, pot-odds sensitivity, varied sizing                 |
 
 Also provide a uniformly random legal-action agent as a debugging baseline. Do not call the mixed reference balanced in the game-theoretic sense or label any heuristic GTO.
 
@@ -65,14 +65,14 @@ Mask unavailable choices. Reject stale or illegal API actions without mutating t
 
 ## Application screens
 
-| Screen | User can do | Information shown |
-| --- | --- | --- |
-| Arena | Play a session against a preset or checkpoint | Cards visible to the player, pot, stacks, legal actions, action log |
-| Opponents | Create, edit, and preview an opponent | Parameters and measured behavior over sample hands |
-| Training | Start a bounded job, stop it, inspect checkpoints | Steps, runtime, training configuration, validation results |
-| Tournaments | Compare a chosen set of policies | Matchup matrix, big blinds per 100 hands, confidence intervals |
-| Replay | Step through a completed hand | Actions, board progression, policy probabilities, optional revealed cards |
-| Models | Compare or promote checkpoints | Game variant, training population, data split, metrics, known weaknesses |
+| Screen      | User can do                                       | Information shown                                                         |
+| ----------- | ------------------------------------------------- | ------------------------------------------------------------------------- |
+| Arena       | Play a session against a preset or checkpoint     | Cards visible to the player, pot, stacks, legal actions, action log       |
+| Opponents   | Create, edit, and preview an opponent             | Parameters and measured behavior over sample hands                        |
+| Training    | Start a bounded job, stop it, inspect checkpoints | Steps, runtime, training configuration, validation results                |
+| Tournaments | Compare a chosen set of policies                  | Matchup matrix, big blinds per 100 hands, confidence intervals            |
+| Replay      | Step through a completed hand                     | Actions, board progression, policy probabilities, optional revealed cards |
+| Models      | Compare or promote checkpoints                    | Game variant, training population, data split, metrics, known weaknesses  |
 
 A running job must show whether it is queued, running, completed, failed, or cancelled. Stopping a job should preserve its latest valid checkpoint. Charts must distinguish training rewards from independent evaluation results.
 
@@ -80,14 +80,14 @@ A running job must show whether it is queued, running, completed, failed, or can
 
 Ship useful human practice with P2, before neural training. The first practice release needs a playable table, bookmarked hands, replay from the player's perspective, and a small post-hand review. It does not need a solver, an LLM, or a complete lesson system.
 
-| Feature | Intended experience | Delivery |
-| --- | --- | --- |
-| Play mode | Complete hands without action recommendations; optionally hide the opponent's preset label for practice against an unknown style | P2 |
-| Review mode | Revisit a decision with future cards and unrevealed opponent cards hidden by default; record the player's reasoning before revealing the result | P2 |
-| Basic decision feedback | Explain position, amount to call, pot odds, effective stack, and available actions; show an equity estimate only when its assumed opponent range and method are explicit | P2 |
-| Focused drills | Practice pot-odds arithmetic, position, value betting, bluff selection, and responses to different opponent behaviors | P3, starting with objective arithmetic exercises |
-| Progress view | Track hands reviewed, arithmetic accuracy, and repeated decision patterns with sample counts; keep assisted and unassisted sessions separate | P3 |
-| Branching replay | Retry a saved decision under alternative actions and compare repeated simulated continuations | Later, after evaluation is reliable |
+| Feature                 | Intended experience                                                                                                                                                      | Delivery                                         |
+| ----------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------ |
+| Play mode               | Complete hands without action recommendations; optionally hide the opponent's preset label for practice against an unknown style                                         | P2                                               |
+| Review mode             | Revisit a decision with future cards and unrevealed opponent cards hidden by default; record the player's reasoning before revealing the result                          | P2                                               |
+| Basic decision feedback | Explain position, amount to call, pot odds, effective stack, and available actions; show an equity estimate only when its assumed opponent range and method are explicit | P2                                               |
+| Focused drills          | Practice pot-odds arithmetic, position, value betting, bluff selection, and responses to different opponent behaviors                                                    | P3, starting with objective arithmetic exercises |
+| Progress view           | Track hands reviewed, arithmetic accuracy, and repeated decision patterns with sample counts; keep assisted and unassisted sessions separate                             | P3                                               |
+| Branching replay        | Retry a saved decision under alternative actions and compare repeated simulated continuations                                                                            | Later, after evaluation is reliable              |
 
 Keep observed facts, estimates, and advice distinct. A pot-odds calculation can be exact for the displayed state; an equity estimate depends on the assumed range; strategic advice depends on that range, future play, and the reference policy. Do not present raw equity as a complete call/fold rule when future betting remains. Do not call a heuristic action optimal, GTO, or a solver answer.
 
@@ -144,15 +144,15 @@ Live endpoints return seat-filtered state. Completed replay endpoints must enfor
 
 ## Milestones
 
-| Milestone | Build | Exit gate |
-| --- | --- | --- |
-| P0 | Repository, engine adapter, config schema, observation boundary | One reproducible complete hand and targeted betting tests |
-| P1 | Opponent factory and headless sessions | Every preset runs; measured behaviors differ in the intended directions |
-| P2 | Arena UI, replay, and basic human practice | Human can play each preset, bookmark decisions, and review a completed session with future information hidden by default |
-| P3 | Evaluation harness, Leduc learning lab, and initial drills | Frozen benchmark manifests, confidence intervals, a reproducible small-game learning result, and objective practice exercises with separate human progress metrics |
-| P4 | Hold’em learning experiment | Saved candidate plus honest held-out report, even if the baseline wins |
-| P5 | Local autonomous bot and policy export | Unattended sessions use the same filtered interface and produce complete audit logs |
-| P6 | Advanced opponents and external adapter | Separate approval of venue, game compatibility, and operational limits before connection |
+| Milestone | Build                                                           | Exit gate                                                                                                                                                          |
+| --------- | --------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| P0        | Repository, engine adapter, config schema, observation boundary | One reproducible complete hand and targeted betting tests                                                                                                          |
+| P1        | Opponent factory and headless sessions                          | Every preset runs; measured behaviors differ in the intended directions                                                                                            |
+| P2        | Arena UI, replay, and basic human practice                      | Human can play each preset, bookmark decisions, and review a completed session with future information hidden by default                                           |
+| P3        | Evaluation harness, Leduc learning lab, and initial drills      | Frozen benchmark manifests, confidence intervals, a reproducible small-game learning result, and objective practice exercises with separate human progress metrics |
+| P4        | Hold’em learning experiment                                     | Saved candidate plus honest held-out report, even if the baseline wins                                                                                             |
+| P5        | Local autonomous bot and policy export                          | Unattended sessions use the same filtered interface and produce complete audit logs                                                                                |
+| P6        | Advanced opponents and external adapter                         | Separate approval of venue, game compatibility, and operational limits before connection                                                                           |
 
 ## Autonomous bot end state
 

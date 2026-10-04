@@ -1,0 +1,19 @@
+[build-system]
+requires = ["hatchling==1.27.0"]
+build-backend = "hatchling.build"
+
+[project]
+name = "poker-arena"
+version = "0.1.0"
+description = "Reproducible heads-up Hold'em core"
+requires-python = ">=3.11"
+dependencies = ["pokerkit==0.7.6"]
+
+[dependency-groups]
+build = ["hatchling==1.27.0"]
+
+[project.scripts]
+poker-arena = "poker_arena.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/poker_arena"]
